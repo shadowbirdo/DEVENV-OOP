@@ -88,7 +88,6 @@ public class Book {
 
     public String info() {
         String msg = String.format("Book: %s - %s (%d). %s, %d. %s", title, editorial, year, lang, nPages, isAvailableMsg());
-        System.out.println(msg);
         return msg;
     }
 }

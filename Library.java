@@ -8,6 +8,7 @@ public class Library {
     private int openTime, closeTime;
     private List<Book> books = new ArrayList<>();
     private List<Room> rooms = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
     // Constructor
     public Library(String name, String address, int openTime, int closeTime) {
@@ -60,7 +61,6 @@ public class Library {
 
     public String info(){
         String msg = String.format("Biblioteca: %s - %s. Abierto de %d a %d", name, address, openTime, closeTime);
-        System.out.println(msg);
         return msg;
     }
 
@@ -124,7 +124,7 @@ public class Library {
     }
 
     // # Room related methods
-    public void addRoom(){
+    public void addRoomDialog(){
         Scanner in = new Scanner(System.in);
 
         System.out.print("Nombre: ");
@@ -146,14 +146,30 @@ public class Library {
 
         System.out.print("Capacidad: ");
         int capacity = in.nextInt();
+        in.nextLine();
 
         System.out.print("Pizarra(y/n): ");
         boolean hasBlackboard = (in.nextLine() == "y") ? true : false;
 
-        Room newRoom = new Room(name, type, capacity, hasBlackboard);
+        System.out.print("Persona responsable: ");
+        String userInChargeName = in.nextLine();
+        
+        User userInCharge = new User("Nadie", "surnames", "dni", "email", "tlfn", "job", 0, 0);
+        for (User user : users) {
+            if(user.getName().equalsIgnoreCase(userInChargeName)){
+                userInCharge = user;
+                break;
+            }
+        }
+
+        Room newRoom = new Room(name, type, capacity, hasBlackboard, userInCharge);
         rooms.add(newRoom);
 
         in.close();
+    }
+
+    public void addRoom(Room room){
+        rooms.add(room);
     }
     
     public void removeRoom(String name){
@@ -177,9 +193,20 @@ public class Library {
     }
 
     // # User related methods
+    public String recordVisit(User user){
+        String outputMsg = user.getName();
+        System.out.println(outputMsg);
+        return outputMsg;
+    }
+    
     public int getCurrentUsersInLibrary(){
         int currentUsersInLibrary = 0;
         for(Room room : rooms) currentUsersInLibrary += room.getUsersSize();
         return currentUsersInLibrary;
+    }
+
+    // # Other methods
+    public void setUserInChargeOfRoom(User user, Room room){
+        room.setUserInCharge(user);
     }
 }

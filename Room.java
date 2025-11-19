@@ -4,17 +4,19 @@ import java.util.List;
 public class Room {
     // Atributes
     private String name, type;
-    private int capacity;
+    private int capacity, usersInside;
     private boolean hasBlackboard, isAvailable;
     private List<User> users = new ArrayList<>();
+    private User userInCharge;
 
     // Contructor
-    public Room(String name, String type, int capacity, boolean hasBlackboard) {
+    public Room(String name, String type, int capacity, boolean hasBlackboard, User userInCharge) {
         this.name = name;
         this.type = type;
         this.capacity = capacity;
         this.hasBlackboard = hasBlackboard;
         this.isAvailable = true;
+        this.userInCharge = userInCharge;
     }
 
     // Setters
@@ -36,6 +38,10 @@ public class Room {
 
     public void setIsAvailable(boolean isAvailable) {
         this.isAvailable = isAvailable;
+    }
+
+    public void setUserInCharge(User userInCharge){
+        this.userInCharge = userInCharge;
     }
  
     
@@ -64,6 +70,10 @@ public class Room {
         return users.size();
     }
 
+    public User getUserInCharge(){
+        return userInCharge;
+    }
+
     // Methods
     public String isAvailableMsg() {
         String msg = (isAvailable) ? "está disponible" : "no está disponible";
@@ -78,8 +88,7 @@ public class Room {
     }
 
     public String info(){
-        String msg = String.format("Sala: %s - %d. Se utilizará para %s, %s y %s.", name, capacity, type, hasBlackboardMsg(),isAvailableMsg());
-        System.out.println(msg);
+        String msg = String.format("Sala: %s - %d. Se utilizará para %s, %s y %s. Hay %d personas en la sala.", name, capacity, type, hasBlackboardMsg(),isAvailableMsg(),usersInside);
         return msg;
     }
 
@@ -104,7 +113,7 @@ public class Room {
 
     public String showUsers(){
         String userList = "User(s) in room:";
-        for (User user : users) userList += "\n- " + user;
+        for (User user : users) userList += "\n- " + user.getName();
         return userList;
     }
 }

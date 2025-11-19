@@ -90,7 +90,6 @@ public class User {
         String msg = String.format(
             "Datos del usuario:\n- Edad: %d\n- Nombre: %s\n- Apellidos: %s\n- DNI: %s\n- Email: %s\n- Tlfn.:%s\n- Trabajo: %s\n- Años de experiencia: %d",
             age, name, surnames, dni, email, tlfn, job, expYears);
-        System.out.println(msg);
         return msg;
     }
 }
